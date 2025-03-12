@@ -1,10 +1,10 @@
-import Link from "next/link";
+import DashBoard from "@/components/DashBoard/DashBoard";
+import ProtectedRoute from "@/HOCs/protectedRoute";
 
 export default function Home() {
   return (
-    <div>
-      <h1>Welcome</h1>
-      <Link href="/login">Login</Link>
-    </div>
-  );
+    <ProtectedRoute>
+        <DashBoard />
+    </ProtectedRoute>
+  )
 }
