@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Login from '@/components/Login/Login';
 import { Metadata } from 'next';
+import RedirectedAuthenticatedUser from '@/HOCs/RedirectedAuthenticatedUser';
 
 export const metadata: Metadata = {
   title: "Login Page | Next App",
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
+    <RedirectedAuthenticatedUser>
     <section className="loginBg h-full pt-24 pb-24">
       <div className="container">
         <div className="flex justify-between items-center bg-white/30 rounded-3xl px-[92px] py-[86px]">
@@ -18,6 +20,7 @@ export default function LoginPage() {
         </div>
       </div>
     </section>
+    </RedirectedAuthenticatedUser>
   );
 }
 

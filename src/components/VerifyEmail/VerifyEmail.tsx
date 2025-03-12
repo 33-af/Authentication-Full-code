@@ -2,26 +2,32 @@
 import React, { useRef, useState } from 'react'
 import Input from '../Input'
 import Button from '../Button';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/AuthStore';
+import { toast } from 'react-toastify';
+
 
 const VerifyEmail = () => {
     const [verifyNumber, setVerifyNumber] = useState(["", "", "", "", "", ""]);
-    const inputRefs = useRef<(HTMLInputElement | null)[]>([]); // This is correct now
-    
+    const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+    const { isLoading, emailVerification } = useAuthStore();
+    const router = useRouter();
+
     const handleChange = (index: number, value: string) => {
-        const newCode = [...verifyNumber];
+        const newVerifyNumber = [...verifyNumber];
 
         if (value.length > 1) {
             const pastedCode = value.slice(0, 6).split("");
             for (let i = 0; i < 6; i++) {
-                newCode[i] = pastedCode[i] || "";
+                newVerifyNumber[i] = pastedCode[i] || "";
             }
-            setVerifyNumber(newCode);
-            const lastFilledIndex = newCode.findLastIndex((digit) => digit !== "");
+            setVerifyNumber(newVerifyNumber);
+            const lastFilledIndex = newVerifyNumber.findLastIndex((digit) => digit !== "");
             const focusIndex = lastFilledIndex < 5 ? lastFilledIndex + 1 : 5;
             inputRefs.current[focusIndex]?.focus();
         } else {
-            newCode[index] = value;
-            setVerifyNumber(newCode);
+            newVerifyNumber[index] = value;
+            setVerifyNumber(newVerifyNumber);
 
             if (value && index < 5) {
                 inputRefs.current[index + 1]?.focus();
@@ -35,19 +41,17 @@ const VerifyEmail = () => {
         }
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const verificationCode = verifyNumber.join("");
+        const verificationNumber = verifyNumber.join("");
         try {
-            // Await the API call or verification logic here
-            // await verifyEmail(verificationCode);
-            alert("You successfully logged in with code: " + verificationCode);
+            await emailVerification(verificationNumber);
+            toast.success("You successfully verify your email");
+            router.push("/")
         } catch (e) {
-            console.log(e);
+            console.log(e)
         }
     };
-
-    const isFormComplete = verifyNumber.every((digit) => digit !== "");
 
     return (
         <div className="flex items-center flex-col">
@@ -70,9 +74,11 @@ const VerifyEmail = () => {
                 <Button
                     title="Verify Email"
                     className="button w-full py-5 font-bold text-xl"
-                    onClick={handleSubmit}
-                    disabled={!isFormComplete} 
-                />
+                    disabled={isLoading || verifyNumber.some((digit) => !digit)}
+                    type="submit"
+                >
+                    {isLoading ? "Verifying..." : "Verify Email"}
+                </Button>
             </form>
         </div>
     );
