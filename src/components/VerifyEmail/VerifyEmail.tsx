@@ -66,7 +66,7 @@ const VerifyEmail = () => {
                             onChange={(e) => handleChange(index, e.target.value)}
                             onKeyDown={(e) => handleKeyDown(index, e)}
                             inputMode="numeric"
-                            className={`custom-checkbox text-center font-bold text-xl ${field ? 'bg-gradient-to-t from-[#F25019] to-[#F87C47]' : ''}`}
+                            className={`custom-checkbox rounded-[19px] text-center font-bold text-xl ${field ? 'bg-gradient-to-t from-[#F25019] to-[#F87C47]' : ''}`}
                             ref={(el: HTMLInputElement | null) => inputRefs.current[index] = el}
                         />
                     ))}

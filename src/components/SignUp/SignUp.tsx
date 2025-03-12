@@ -64,7 +64,7 @@ const SignUp = () => {
     }
 
     return (
-        <form className='bg-white/40 px-[30px] py-12 rounded-3xl' onSubmit={handleSignUp}>
+        <form className='bg-white/40 px-[60px] py-12 rounded-3xl' onSubmit={handleSignUp}>
             <h1 className='text-5xl font-bold mb-6 text-[#F25019]'>Create Account</h1>
             <label className="block mb-2" htmlFor="name">Full Name</label>
             <Input
