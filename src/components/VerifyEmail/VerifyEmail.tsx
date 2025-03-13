@@ -72,7 +72,7 @@ const VerifyEmail = () => {
                     ))}
                 </div>
                 <Button
-                    title="Verify Email"
+                    title="Verify your Email"
                     className="button w-full py-5 font-bold text-xl"
                     disabled={isLoading || verifyNumber.some((digit) => !digit)}
                     type="submit"
