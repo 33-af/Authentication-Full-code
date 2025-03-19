@@ -66,13 +66,13 @@ const VerifyEmail = () => {
                             onChange={(e) => handleChange(index, e.target.value)}
                             onKeyDown={(e) => handleKeyDown(index, e)}
                             inputMode="numeric"
-                            className={`custom-checkbox rounded-[19px] text-center font-bold text-xl ${field ? 'bg-gradient-to-t from-[#F25019] to-[#F87C47]' : ''}`}
+                            className={`custom-checkbox rounded-[19px] text-center font-bold text-xl  border-[#f25019]${field ? 'bg-gradient-to-t from-[#F25019] to-[#F87C47]' : ''}`}
                             ref={(el: HTMLInputElement | null) => inputRefs.current[index] = el}
                         />
                     ))}
                 </div>
                 <Button
-                    title="Verify Email"
+                    title="Verify your Email"
                     className="button w-full py-5 font-bold text-xl"
                     disabled={isLoading || verifyNumber.some((digit) => !digit)}
                     type="submit"

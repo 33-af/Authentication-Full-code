@@ -76,7 +76,7 @@ const ResetPassword = () => {
             <p className='text-center text-base font-medium mb-6'>Create a new password and confirm it to reset your access.</p>
             <div className="flex flex-col">
                 <Input
-                    className="reset-input mb-5"
+                    className="input w-[551px]"
                     type="password"
                     value={password}
                     name='password'
@@ -89,7 +89,7 @@ const ResetPassword = () => {
                 )}
 
                 <Input
-                    className="reset-input mb-8"
+                  className="input w-[551px]"
                     type="password"
                     value={confirmPassword}
                     name='password'
@@ -101,7 +101,6 @@ const ResetPassword = () => {
                     <p className='text-red-700 font-extrabold text-base mb-2'>{errors.confirmNewPassword}</p>
                 )}
             </div>
-
 
             <Button title='Set New Password' className='button w-full py-4 mb-4' type="submit"  disabled={isLoading}>{isLoading ? "Resetting..." : "Set New Password"}</Button>
             <p className="text-center">

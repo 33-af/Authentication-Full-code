@@ -8,10 +8,9 @@ export const metadata: Metadata = {
 };
 
 export default function ForgotPasswordPage() {
-
     return (
         <RedirectedAuthenticatedUser>
-            <section className="loginBg h-[100vh] pt-48 pb-48">
+            <section className="loginBg h-full pt-48 pb-48">
                 <div className="container">
                     <div className="flex justify-center items-center bg-white/30 rounded-3xl px-[92px] py-[86px]">
                         <ForgotPassword />

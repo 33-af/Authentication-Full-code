@@ -11,12 +11,12 @@ export const metadata: Metadata = {
 const VerifyEmailPage = () => {
   return (
     <RedirectedAuthenticatedUser>
-    <section className="loginBg h-[100vh]">
+    <section className="loginBg h-full">
       <div className="container flex items-center justify-center">
         <div className="flex justify-center self-center items-center rounded-3xl px-[92px] py-[215px]">
-        <div className='bg-[#ffffff4d] px-7 py-8 rounded-3xl w-[658px]'>
+        <div className="bg-[#FFDFC8] backdrop-blur-md px-7 py-8 rounded-3xl w-[658px]">
             <h1 className='text-center text-[#F25019] font-bold text-3xl mb-2'>Verify your Email</h1>
-            <p className='text-base text-black text-center mb-5'>We have sent the verification code to your email address</p>
+            <p className='text-base text-[#3C3232] text-center mb-5 text-[18px]'>We have sent the verification code to your email address</p>
             <div className="flex-between">
             <VerifyEmail/>
             </div>

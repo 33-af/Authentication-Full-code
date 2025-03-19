@@ -1,87 +1,97 @@
 "use client"
 
 import Link from 'next/link';
-import React, { useState } from 'react'
+import React from 'react'
 import Button from '../Button';
 import Input from '../Input';
 import { useAuthStore } from '@/store/AuthStore';
 import Loader from '../Loader';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { EmailPattern } from '@/paterns/pattern';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { loginSchema, loginSchemaType } from '@/types/schema';
+
+// type LoginType = {
+//     email: string;
+//     password: string;
+// }
 
 const Login = () => {
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [errors, setErrors] = useState<{ email: string; password: string; }>({
-        email: "",
-        password: "",
-    });
     const { login, isLoading } = useAuthStore();
-
-    const handleEmailOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value)
-    }
-    const handlePasswordOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value)
-    }
-
-    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        const newError: { email: string; password: string } = {
+    const { control, formState: { errors }, handleSubmit } = useForm<loginSchemaType>({
+        resolver: zodResolver(loginSchema),
+        defaultValues: {
+            variant: 'login',
             email: '',
             password: ''
-        };
+          },
+    });
+    const router = useRouter();
 
-        if (!email.trim()) {
-            newError.email = "Email is required"
-        } else if (!/\S+@\S+\.\S+/.test(email)) {
-            newError.email = "Invalid email format";
+    const handleLogin: SubmitHandler<loginSchemaType> = async (data) => {
+        try {
+            await login(data.email, data.password);
+            router.push("/")
+        } catch (e) {
+            toast.error(e instanceof Error  ? e.message : String(e))
         }
-
-        if (!password.trim()) {
-            newError.password = "Password is required";
-        }
-        setErrors(newError);
-
-
-        await login(email, password)
     }
 
     return (
-        <form className='bg-white/40 rounded-3xl px-[60px] py-12' onSubmit={handleLogin}>
+        <form className='bg-white/40 rounded-3xl px-[60px] py-12' onSubmit={handleSubmit(handleLogin)}>
             <h1 className='text-5xl font-bold mb-6 text-[#F25019]'>Welcome Back</h1>
             <label className="block mb-2" htmlFor="email">Email</label>
-            <Input
-                className="block rounded-[4px] bg-white mb-4 w-[335px] px-4 py-3"
-                type="email"
-                value={email}
+            <Controller
                 name='email'
-                placeholder='Email Address'
-                onChange={handleEmailOnChange}
-                id='email'
+                control={control}
+                defaultValue=''
+                rules={{
+                    required: "Email is required",
+                    pattern: {
+                        value: EmailPattern,
+                        message: "Invalid email format",
+                    },
+                }}
+                render={({ field }) => (
+                    <Input
+                        className="w-[335px] input "
+                        type="email"
+                        placeholder='Email Address'
+                        {...field}
+                    />
+                )}
             />
-            {errors && (
-                <p className='text-red-700 font-extrabold text-base mb-2'>{errors.email}</p>
+
+            {errors.email && (
+                <p className='text-[#F25019] font-extrabold text-base mb-2'>{errors.email.message}</p>
             )}
 
             <label className="block mb-2" htmlFor="password">Password</label>
-            <Input
-                className="block rounded-[4px] bg-white mb-4 w-[335px] px-4 py-3"
-                type="password"
-                value={password}
+            <Controller
                 name='password'
-                placeholder='Password'
-                onChange={handlePasswordOnChange}
-                id='password'
+                control={control}
+                defaultValue=''
+                rules={{
+                    required: "Password is required",
+                }}
+                render={({ field }) => (
+                    <Input
+                        className="w-[335px] input "
+                        type="password"
+                        placeholder='Password'
+                        {...field}
+                    />
+                )}
             />
-            {errors && (
-                <p className='text-red-700 font-extrabold text-base mb-2'>{errors.password}</p>
+            {errors.password && (
+                <p className='text-[#F25019] font-extrabold text-base mb-2'>{errors.password.message}</p>
             )}
 
             <div className='text-[#AE4700] mb-4 '>
                 <Link href="/forgot-password">
-
                     <span className="text-[#AE4700] hover:underline text-base">
-
                         Forgot Password?</span>
                 </Link>
             </div>
@@ -93,7 +103,6 @@ const Login = () => {
                     Sign up
                 </Link>
             </p>
-
         </form>
     )
 }

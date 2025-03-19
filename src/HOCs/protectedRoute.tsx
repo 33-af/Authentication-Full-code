@@ -10,18 +10,17 @@ interface IProtectedRoute {
 }
 
 const ProtectedRoute: FC<IProtectedRoute> = ({ children }) => {
-  const { isAuthenticated, user } = useAuthStore();
+  const { isAuthenticated } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {
     if (!isAuthenticated) {
       router.replace("/login");
-    } else if (!user) {
-      router.replace("/verify-email");
-    }
-  }, [isAuthenticated, user]);
+    } 
+   
+  }, [isAuthenticated]);
 
-  if (!isAuthenticated || !user) {
+  if (!isAuthenticated ) {
     return <div className='bg-[#FFD1B0] w-full h-screen  '><Loader className="w-[165px] h-[170px]  my-[300px]"/></div>;
   }
 

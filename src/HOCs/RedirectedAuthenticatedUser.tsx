@@ -13,7 +13,7 @@ const RedirectedAuthenticatedUser = ({ children }: IRedirectedAuthenticatedUser)
     const router = useRouter();
 
     useEffect(() => {
-        if (isAuthenticated && user){
+        if (isAuthenticated && user?.isVerified){
             router.replace("/");
         }
     }, [isAuthenticated, router,user])
