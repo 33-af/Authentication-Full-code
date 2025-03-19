@@ -1,0 +1,1 @@
+export const BACKEND_API="https://auth-yt-tut.onrender.com/api/auth"

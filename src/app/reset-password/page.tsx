@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const ResetPasswordPage = () => {
   return (
     <RedirectedAuthenticatedUser>
-      <section className="loginBg h-[100vh] pt-42 pb-42">
+      <section className="loginBg h-full pt-42 pb-42">
         <div className="container">
           <div className="flex justify-center items-center bg-white/30 rounded-3xl px-[92px] py-[86px]">
             <ResetPassword />

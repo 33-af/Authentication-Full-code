@@ -14,11 +14,12 @@ export interface IAuthStore{
 }
 
 export interface IUser {
-    name: string;
+    name?: string;
     email: string;
     password: string; 
-    createdAt:Date;
-    lastLogin: string
+    createdAt?:Date;
+    lastLogin?: string
+    isVerified?:boolean
   }
   
  
@@ -27,13 +28,10 @@ export interface IUser {
   }
 
   export interface IAuthLogin{
-    // email:string;
-    // password:string
     user:IUser
   }
 
   export interface IVerifyEmail  {
-    // numberVerification: string;
     user:IUser
   }
 

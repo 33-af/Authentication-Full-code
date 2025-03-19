@@ -29,7 +29,6 @@ const Input = ({ type, placeholder, id, value, name, className, onChange, onKeyD
       onKeyDown={onKeyDown}
       maxLength={maxLength}
       inputMode={inputMode}  
-
     />
   );
 };
