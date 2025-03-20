@@ -17,33 +17,33 @@ export const signUpSchema = z.object({
 
 export const loginSchema = z.object({
     email: z
-        .string()
-        .min(1, { message: 'Email is required' })
-        .refine((text) => EmailPattern.test(text), {
-            message: 'Email not valid',
-        }),
-    password: z.string().min(6, { message: 'Password is required' }),
+    .string()
+    .min(1, { message: 'Email is required' })
+    .refine((text) => EmailPattern.test(text), {
+        message: 'Email not valid',
+    }),
+    password: z.string().min(6, { message: 'Password should be at least 6 characters' }), 
     variant: z.literal("login")
 });
 
-export const UserProfile  = z.object({
-    name: z.string().min(1, {message: "Required"}),
-    email: z.string().min(1, {message: "Email is required"}).refine((text) => EmailPattern.test(text),{
-        message: "Email not valid",
-    }),
-    password: z.string(),
-    createdAt: z.string().date(),
-    lastLogin: z.string().date(),
-    isVerified: z.boolean(),
-    variant: z.literal("profile")
-})
+// export const UserProfile  = z.object({
+//     name: z.string().min(1, {message: "Required"}),
+//     email: z.string().min(1, {message: "Email is required"}).refine((text) => EmailPattern.test(text),{
+//         message: "Email not valid",
+//     }),
+//     password: z.string(),
+//     createdAt: z.string().date(),
+//     lastLogin: z.string().date(),
+//     isVerified: z.boolean(),
+//     variant: z.literal("profile")
+// })
 
 
 export const schema = z
     .discriminatedUnion('variant', [
         z.object({ variant: z.literal('signUp') }).merge(signUpSchema),
         z.object({ variant: z.literal('login') }).merge(loginSchema),
-        z.object({ variant: z.literal('profile') }).merge(UserProfile),
+        // z.object({ variant: z.literal('profile') }).merge(UserProfile),
     ]);
 
     export type Schema  = z.infer<typeof schema>
@@ -65,15 +65,15 @@ export const schema = z
         password: '',
     };
     
-    export const profileDefaultValues: Schema = {
-        variant: 'profile',
-        name: '',
-        email: '',
-        password: '',
-        createdAt: new Date().toString(),
-        lastLogin: new Date().toString(),
-        isVerified: false,
-    };
+    // export const profileDefaultValues: Schema = {
+    //     variant: 'profile',
+    //     name: '',
+    //     email: '',
+    //     password: '',
+    //     createdAt: new Date().toString(),
+    //     lastLogin: new Date().toString(),
+    //     isVerified: false,
+    // };
     
 
 

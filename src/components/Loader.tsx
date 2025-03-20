@@ -9,7 +9,7 @@ interface ILoader{
 const Loader = ({className}:ILoader) => {
   return (
     <div className="flex  justify-center w-full h-screen">
-      <Image src={LoaderGif} width={25} height={25} alt="spinner" className={className} />
+      <Image src={LoaderGif} width={25} height={25} alt="spinner" className={`${className} h-6 w-6` } />
     </div>
   );
 }
