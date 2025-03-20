@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation'
 import Loader from '../Loader'
 import { Controller, useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {signUpSchema, SignUpSchemaType } from '@/types/schema'
+import { signUpSchema, SignUpSchemaType } from '@/types/schema'
 import { toast } from 'react-toastify'
 
 
@@ -24,17 +24,18 @@ const SignUp = () => {
             password: '',
             createdAt: new Date(),
             isVerified: false,
-          },
-    
+        },
+
     });
     const router = useRouter();
 
     const handleSignUp: SubmitHandler<SignUpSchemaType> = async (data) => {
         try {
-            await signUp(data.name, data.email, data.password);
-            router.push("/");
+            await signUp(data.email, data.password, data.name );
+            router.push("/login");
+            console.log("User state in SignUp component:", useAuthStore.getState().user)
         } catch (e: unknown) {
-               toast.error(e instanceof Error  ? e.message : String(e))
+            toast.error(e instanceof Error ? e.message : String(e))
         }
     }
 
@@ -91,12 +92,12 @@ const SignUp = () => {
                     />
                 )}
             />
-            
+
             {errors.password && (
                 <p className="text-[#F25019] font-extrabold text-base mb-4">{errors.password.message}</p>
             )}
 
-            <Button title='Sign Up' className='button w-[335px] py-4 mb-4 ' type="submit" disabled={isLoading} >{isLoading ? <Loader /> : "Sign Up"}</Button>
+            <Button title='Sign Up' className='button w-[335px] py-4 mb-4 h-[53px] ' type="submit" disabled={isLoading} >{isLoading ? <Loader className='w-6 h-6' /> : "Sign Up"}</Button>
             <p className='text-center'>Already have an account? <Link href={'/login'} className='text-[#AE4700] hover:underline text-base ml-1'>  Login</Link></p>
         </form>
     )

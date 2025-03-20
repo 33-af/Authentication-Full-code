@@ -34,6 +34,7 @@ const Login = () => {
         try {
             await login(data.email, data.password);
             router.push("/")
+              console.log("User state in Login component:", useAuthStore.getState().user)
         } catch (e) {
             toast.error(e instanceof Error  ? e.message : String(e))
         }
@@ -96,7 +97,7 @@ const Login = () => {
                 </Link>
             </div>
 
-            <Button title='Login' className='button w-full py-4 mb-4 text-base h-14 ' type="submit" disabled={isLoading}>{isLoading ? (<Loader className='w-[]' />) : ("Login")}</Button>
+            <Button title='Login' className='button w-[335px] py-4 mb-4 h-[53px] ' type="submit" disabled={isLoading}>{isLoading ? (<Loader  />) : ("Login")}</Button>
             <p className="text-center">
                 Don’t have an account?
                 <Link href="/sign-up" className="text-[#AE4700] hover:underline text-base ml-1">
